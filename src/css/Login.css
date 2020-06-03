@@ -8,6 +8,7 @@
   border-radius: 5px;
   text-align: center;
   width: 75%;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.5);
 }
 .title {
   margin-top: 15px;
@@ -23,6 +24,19 @@
   margin-top: 25px;
   border-radius: 3px;
   font-family: 'Josefin Sans', sans-serif;
+  background-repeat: no-repeat;
+  background-size: 21px;
+  background-position-x: 12px;
+
+}
+.input.email {
+  background-image: url('../svg/mail.svg');
+  background-position-y: 10px;
+
+}
+.input.password{
+  background-image: url('../svg/lock.svg');
+  background-position-y: 9px;
 }
 .forgot-wrapper {
   text-align: right;
@@ -30,44 +44,55 @@
   width: 80%;
   text-decoration: none;
 }
-.forgot-wrapper a{
-    text-decoration: none;
-    color: black;
-    font-size: 10px;
-    font-family: 'Josefin Sans', sans-serif;
+.forgot-wrapper a {
+  text-decoration: none;
+  color: black;
+  font-size: 10px;
+  font-family: 'Josefin Sans', sans-serif;
 }
-.lets-go{
+.lets-go {
   border-radius: 3px;
   border: none;
-  width: 60%;
-  background-color: #FCA311;
+  width: 65%;
+  background-color: #fca311;
   height: 42px;
   margin: 20px 0;
   font-family: 'Paytone One', sans-serif;
+  font-size: 20px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+
 }
-.or-divider{
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Josefin Sans', sans-serif;
+.or-divider {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Josefin Sans', sans-serif;
 }
-.or-divider span{
-    margin: 0 30px;
+.or-divider span {
+  margin: 0 30px;
 }
-.divider{
-    width: 25%;
-    border: 1px solid #e5e5e5;
-    border-radius: 3px;
+.divider {
+  width: 25%;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
 }
-.alt-login{
-    color: #ffffff;
-    text-align: left;
+.alt-login {
+  color: #ffffff;
+  text-align: left;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+
 }
-.facebook{
-    background-color: #3B5998;
+.facebook {
+  background-color: #3b5998;
+  background-image: url('../svg/facebook.svg');
+  background-position-y: 11px;
+
 }
-.google{
-    background-color: #D71919;
-    margin-bottom: 25px;
+.google {
+  background-color: #d71919;
+  margin-bottom: 25px;
+  background-image: url('../svg/google.svg');
+  background-position-y: 10px;
+
 }
