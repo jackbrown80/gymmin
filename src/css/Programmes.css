@@ -1,0 +1,26 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.programmes-wrapper{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+.programmes-title {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: white;
+}
+.create-prompt {
+  margin: 0;
+  padding: 0;
+  font-family: 'Josefin Sans', sans-serif;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+
+}
