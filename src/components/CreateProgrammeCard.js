@@ -13,7 +13,7 @@ const CreateProgrammeCard = (props) => {
       <p className="card-text">{props.text}</p>
       <div className="text-button">
         <p className="card-text second">{props.textButton}</p>
-        <button className="create-programme" onClick={handleClick}>
+        <button className="orange-cta" onClick={handleClick}>
           CREATE
         </button>
       </div>

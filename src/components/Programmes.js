@@ -23,6 +23,7 @@ const Programmes = (props) => {
       title={title}
       text={text}
       textButton={textButton}
+      className="create-card"
     />
     <h1 className="programmes-title">PROGRAMMES</h1>
     <p className="create-prompt">
