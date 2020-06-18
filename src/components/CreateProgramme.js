@@ -5,6 +5,31 @@ import { useHistory } from 'react-router-dom'
 import { withFirebase } from './Firebase'
 import * as ROUTES from '../constants/routes'
 
+const NoWorkouts = () => {
+  return (
+    <p className="add-prompt">
+      Click the add button (+) in the top right to add a workout
+    </p>
+  )
+}
+
+const Workouts = (props) => {
+  return (
+    <div>
+      {Object.keys(props.workouts).map((key) => (
+        <WorkoutCard
+          key={key}
+          index={key}
+          deleteWorkout={props.deleteWorkout}
+          setProgrammes={props.setProgrammes}
+          setWorkouts={props.setWorkouts}
+          workouts={props.workouts}
+        />
+      ))}
+    </div>
+  )
+}
+
 const CreateProgrammeBase = (props) => {
   // Get intial workouts state from local storage, if it doesn't exist set it to 0. Parse turns it from a string to an object
   const initialWorkouts =
@@ -50,14 +75,9 @@ const CreateProgrammeBase = (props) => {
 
   const saveProgramme = () => {
     let prevProgrammes = {
-      ...props.firebase.db
-        .ref(`users/${props.authUser.uid}/programmes`)
-        .on('value', (snapshot) => {
-          return snapshot.val()
-        }),
+      ...props.programmes,
     }
-    console.log(prevProgrammes);
-    
+
     const programmesCount = Object.keys(prevProgrammes).length
     prevProgrammes[`programme${programmesCount + 1}`] = workouts
     props.firebase.db
@@ -73,54 +93,32 @@ const CreateProgrammeBase = (props) => {
 
   const workoutsExist = Object.keys(workouts).length !== 0
 
-  if (workoutsExist) {
-    return (
-      <div className="create-prog-wrapper">
-        <div className="create-row">
-          <h1 className="programmes-title create">CREATE PROGRAMME</h1>
-          <button className="add-button" onClick={addWorkout}></button>
-        </div>
-        {Object.keys(workouts).map((key) => (
-          <WorkoutCard
-            key={key}
-            index={key}
-            deleteWorkout={deleteWorkout}
-            setProgrammes={props.setProgrammes}
-            setWorkouts={setWorkouts}
-            workouts={workouts}
-          />
-        ))}
-        <div className="back-next">
-          <button className="back orange-cta" onClick={goBack}>
-            CANCEL
-          </button>
-          <button className="next orange-cta" onClick={saveProgramme}>
-            SAVE
-          </button>
-        </div>
+  return (
+    <div className="create-prog-wrapper">
+      <div className="create-row">
+        <h1 className="programmes-title create">CREATE PROGRAMME</h1>
+        <button className="add-button" onClick={addWorkout}></button>
       </div>
-    )
-  } else {
-    return (
-      <div className="create-prog-wrapper">
-        <div className="create-row">
-          <h1 className="programmes-title create">CREATE PROGRAMME</h1>
-          <button className="add-button" onClick={addWorkout}></button>
-        </div>
-        <p className="add-prompt">
-          Click the add button (+) in the top right to add a workout
-        </p>
-        <div className="back-next">
-          <button className="back orange-cta" onClick={goBack}>
-            CANCEL
-          </button>
-          <button className="next orange-cta" onClick={saveProgramme}>
-            SAVE
-          </button>
-        </div>
+      {workoutsExist ? (
+        <Workouts
+          workouts={workouts}
+          deleteWorkout={deleteWorkout}
+          setWorkouts={setWorkouts}
+          setProgrammes={props.setProgrammes}
+        />
+      ) : (
+        <NoWorkouts />
+      )}
+      <div className="back-next">
+        <button className="back orange-cta" onClick={goBack}>
+          CANCEL
+        </button>
+        <button className="next orange-cta" onClick={saveProgramme}>
+          SAVE
+        </button>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 const CreateProgramme = withFirebase(CreateProgrammeBase)

@@ -13,18 +13,33 @@ import { withFirebase } from './Firebase'
 
 function App(props) {
   const [authUser, setAuthUser] = useState(null)
-  
-  const initialProgrammes =
-  JSON.parse(window.localStorage.getItem('programmes')) || {}
-  
-  const [programmes, setProgrammes] = useState(initialProgrammes)
+
+  const [programmes, setProgrammes] = useState(null)
+  const [programmesLoading, setProgrammesLoading] = useState(false)
 
   // Everytime App re-renders, check if there has been a change to the Auth status and update the authState
   useEffect(() => {
-    props.firebase.auth.onAuthStateChanged(authUser => {
+    const listener = props.firebase.auth.onAuthStateChanged((authUser) => {
       authUser ? setAuthUser(authUser) : setAuthUser(null)
     })
+    // This is the clean up function and run when the component unmounts - stops memory leaks
+    return () => {
+      listener()
+    }
   })
+
+  useEffect(() => {
+    setProgrammesLoading(true)
+
+    if (authUser !== null) {
+      props.firebase
+        .getProgrammesByUid(authUser.uid)
+        .on('value', (snapshot) => {
+          setProgrammes(snapshot.val())
+          setProgrammesLoading(false)
+        })
+    }
+  }, [authUser, props.firebase])
 
   return (
     <Router>
@@ -33,12 +48,16 @@ function App(props) {
           <Logo className="logo" />
         </header>
         <Route path={ROUTES.LANDING} exact></Route>
-        <Route path={ROUTES.LOGIN} render={() => <SignIn />}></Route>
+        <Route path={ROUTES.SIGN_IN} render={() => <SignIn />}></Route>
         <Route path={ROUTES.SIGN_UP} render={() => <SignUp />}></Route>
         <Route
           path={ROUTES.HOME}
           render={() => (
-            <Home programmes={programmes} setProgrammes={setProgrammes} authUser={authUser} />
+            <Home
+              programmes={programmes}
+              setProgrammes={setProgrammes}
+              authUser={authUser}
+            />
           )}
         ></Route>
         <Route

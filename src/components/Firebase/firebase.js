@@ -42,6 +42,7 @@ class Firebase {
 
   getAllUsers = () => this.db.ref(`users/`)
 
+  getProgrammesByUid = (uid) => this.db.ref(`users/${uid}/programmes`)
 }
 
 export default Firebase
