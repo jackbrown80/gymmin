@@ -7,7 +7,7 @@
   background-color: #ffffff;
   border-radius: 5px;
   text-align: center;
-  width: 85%;
+  width: 90%;
   box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.5);
   margin: auto;
   padding-top: 15px;
@@ -42,7 +42,8 @@
   text-align: right;
   margin: 0 auto;
   width: 80%;
-  text-decoration: none;
+  text-decoration: underline;
+
 }
 .forgot-wrapper a {
   text-decoration: none;
@@ -53,12 +54,12 @@
 .lets-go {
   border-radius: 3px;
   border: none;
-  width: 65%;
+  width: 50%;
   background-color: #fca311;
   height: 42px;
   margin: 20px 0;
   font-family: 'Paytone One', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 }
 .or-divider {
@@ -104,8 +105,14 @@
   margin-top: 15px;
   font-size: 13px;
   text-align: center;
-}
-.new-account a {
   font-family: 'Josefin Sans', sans-serif;
   color: white;
+}
+.new-account a {
+  color: white;
+}
+
+.button-row{
+  display: flex;
+  justify-content: space-evenly;
 }

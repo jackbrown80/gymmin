@@ -1,11 +1,13 @@
 import React from 'react'
 import '../css/NoProgrammes.css'
 import { useHistory } from 'react-router-dom'
+import * as ROUTES from '../constants/routes'
+
 
 const CreateProgrammeCard = (props) => {
   const history = useHistory()
   const handleClick = () => {
-    history.push('/programmes/create')
+    history.push(ROUTES.CREATE_PROGRAMME)
   }
   return (
     <div className="card-wrapper">

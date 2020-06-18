@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import '../css/CreateProgrammes.css'
 import WorkoutCard from './WorkoutCard'
 import { useHistory } from 'react-router-dom'
+import { withFirebase } from './Firebase'
+import * as ROUTES from '../constants/routes'
 
-const CreateProgramme = (props) => {
+const CreateProgrammeBase = (props) => {
   // Get intial workouts state from local storage, if it doesn't exist set it to 0. Parse turns it from a string to an object
   const initialWorkouts =
     JSON.parse(window.localStorage.getItem('workouts')) || 0
@@ -47,12 +49,21 @@ const CreateProgramme = (props) => {
   }
 
   const saveProgramme = () => {
-    let prevProgrammes = {...props.programmes}
+    let prevProgrammes = {
+      ...props.firebase.db
+        .ref(`users/${props.authUser.uid}/programmes`)
+        .on('value', (snapshot) => {
+          return snapshot.val()
+        }),
+    }
+    console.log(prevProgrammes);
+    
     const programmesCount = Object.keys(prevProgrammes).length
     prevProgrammes[`programme${programmesCount + 1}`] = workouts
-    props.setProgrammes(prevProgrammes)
-    window.localStorage.clear()
-    history.push('/programmes')
+    props.firebase.db
+      .ref(`users/${props.authUser.uid}/programmes`)
+      .set(prevProgrammes)
+    history.push(ROUTES.HOME)
   }
 
   const goBack = () => {
@@ -96,7 +107,9 @@ const CreateProgramme = (props) => {
           <h1 className="programmes-title create">CREATE PROGRAMME</h1>
           <button className="add-button" onClick={addWorkout}></button>
         </div>
-        <p className="add-prompt">Click the add button (+) in the top right to add a workout</p>
+        <p className="add-prompt">
+          Click the add button (+) in the top right to add a workout
+        </p>
         <div className="back-next">
           <button className="back orange-cta" onClick={goBack}>
             CANCEL
@@ -109,5 +122,7 @@ const CreateProgramme = (props) => {
     )
   }
 }
+
+const CreateProgramme = withFirebase(CreateProgrammeBase)
 
 export default CreateProgramme
