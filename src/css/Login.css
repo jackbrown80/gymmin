@@ -69,13 +69,12 @@
   justify-content: center;
   font-family: 'Josefin Sans', sans-serif;
 }
-.or-divider span {
-  margin: 0 30px;
-}
+
 .divider {
   width: 25%;
   border: 1px solid #e5e5e5;
   border-radius: 3px;
+  margin: 0 30px;
 }
 .alt-login {
   color: #ffffff;
@@ -110,9 +109,4 @@
 }
 .new-account a {
   color: white;
-}
-
-.button-row{
-  display: flex;
-  justify-content: space-evenly;
 }
