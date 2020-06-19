@@ -5,23 +5,20 @@ import * as ROUTES from '../constants/routes'
 import '../css/Programmes.css'
 import SignOutButton from './SignOutButton'
 
-const CreateProgrammeCard = (props) => {
+const WelcomeCard = (props) => {
   const history = useHistory()
 
   const handleClick = () => {
     history.push(ROUTES.CREATE_PROGRAMME)
   }
 
-  let title = ''
   let text = ''
   let textButton = ''
 
   if (props.programmesExist) {
-    title = 'WELCOME!'
     text = "Looks like you've already created a programme, you can use that!"
     textButton = 'You can choose to create another one if you like.'
   } else {
-    title = 'NO PROGRAMMES'
     text = "Looks like you haven't got any programmes yet!"
     textButton =
       "No worries, it's quick and easy to create your own and get started!"
@@ -29,7 +26,7 @@ const CreateProgrammeCard = (props) => {
 
   return (
     <div className="card-wrapper">
-      <h1 className="card-title">{title}</h1>
+      <h1 className="card-title">WELCOME!</h1>
       <p className="card-text">{text}</p>
       <div className="text-button">
         <p className="card-text second">{textButton}</p>
@@ -69,7 +66,7 @@ const Home = (props) => {
 
   return (
     <div className="programmes-wrapper">
-      <CreateProgrammeCard
+      <WelcomeCard
         className="create-card"
         programmesExist={programmesExist}
       />
