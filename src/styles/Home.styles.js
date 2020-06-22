@@ -58,11 +58,10 @@ export const Title = styled.h1`
   font-weight: 900;
   font-size: 20px;
   color: white;
-  margin-top: 30px;
+  margin: 30px 0 15px 0;
 `
 
 export const NoProgrammesPrompt = styled.p`
-  margin-top: 15px;
   padding: 0;
   font-family: 'Josefin Sans', sans-serif;
   color: white;

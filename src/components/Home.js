@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import * as ROUTES from '../constants/routes'
 import SignOutButton from './SignOutButton'
+import ProgrammeCard from './ProgrammeCard'
 import {
   WelcomeCardWrapper,
   WelcomeCardTitle,
@@ -58,10 +59,7 @@ const NoProgrammes = () => {
 
 const renderProgrammes = () => {
   return (
-    <div>
-      Programmes to come...
-      <SignOutButton></SignOutButton>
-    </div>
+      <ProgrammeCard></ProgrammeCard>
   )
 }
 

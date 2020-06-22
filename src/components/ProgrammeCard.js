@@ -1,9 +1,22 @@
+import React, { useState, useEffect } from 'react'
+import {
+    CardWrapper,
+  TextWrapper,
+  Title,
+  Description,
+  Arrow,
+} from '../styles/ProgrammeCard.style'
+
 const ProgrammeCard = () => {
-  return (
-    <div className="programmes-wrapper cards">
-      <div className="card-wrapper">Hi</div>
-    </div>
-  )
+    return (
+        <CardWrapper>
+            <TextWrapper>
+                <Title>Push, Pull, Legs</Title>
+                <Description>Not yet started</Description>
+            </TextWrapper>
+            <Arrow></Arrow>
+        </CardWrapper>
+    )
 }
 
 export default ProgrammeCard
