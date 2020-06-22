@@ -10,6 +10,8 @@ import * as ROUTES from '../constants/routes'
 import SignUp from './SignUp'
 import { withFirebase } from './Firebase'
 import { AppContainer, LogoWrapper } from '../styles/App.styles'
+import '../css/cleaning.css'
+
 
 const App = (props) => {
   const [authUser, setAuthUser] = useState(null)

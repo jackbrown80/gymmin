@@ -26,7 +26,7 @@ export const Title = styled.h1`
   font-size: 24px;
 `
 
-export const EmailInput = styled.input`
+export const Input = styled.input`
   border: none;
   width: 80%;
   background-color: #e5e5e5;
@@ -39,25 +39,9 @@ export const EmailInput = styled.input`
   background-repeat: no-repeat;
   background-size: 21px;
   background-position-x: 12px;
-  background-image: url(${mail});
-  background-position-y: 10px;
-`
-
-export const PasswordInput = styled.input`
-  border: none;
-  width: 80%;
-  background-color: #e5e5e5;
-  height: 42px;
-  padding-left: 45px;
-  margin-top: 25px;
-  border-radius: 3px;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 18px;
-  background-repeat: no-repeat;
-  background-size: 21px;
-  background-position-x: 12px;
-  background-image: url(${lock});
-  background-position-y: 9px;
+  background-image: ${(props) =>
+    props.mail ? `url(${mail})` : `url(${lock})`};
+  background-position-y: ${(props) => (props.mail ? '10px' : '9px')};
 `
 
 export const ForgotPasswordWrapper = styled.div`
@@ -101,7 +85,7 @@ export const DividerLine = styled.hr`
   margin: 0 30px;
 `
 
-export const FacebookLoginButton = styled.button`
+export const AltLoginButton = styled.button`
   border: none;
   width: 80%;
   background-color: #e5e5e5;
@@ -117,31 +101,11 @@ export const FacebookLoginButton = styled.button`
   color: #ffffff;
   text-align: left;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-  background-color: #3b5998;
-  background-image: url(${facebook});
-  background-position-y: 11px;
-`
-
-export const GoogleLoginButton = styled.button`
-  border: none;
-  width: 80%;
-  background-color: #e5e5e5;
-  height: 42px;
-  padding-left: 45px;
-  margin-top: 25px;
-  border-radius: 3px;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 18px;
-  background-repeat: no-repeat;
-  background-size: 21px;
-  background-position-x: 12px;
-  color: #ffffff;
-  text-align: left;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
-  background-color: #d71919;
-  margin-bottom: 25px;
-  background-image: url(${google});
-  background-position-y: 10px;
+  background-color: ${(props) => (props.facebook ? '#3b5998' : '#d71919')};
+  background-image: ${(props) =>
+    props.facebook ? `url(${facebook})` : `url(${google})`};
+  background-position-y: ${(props) => (props.facebook ? '11px' : '10px')};
+  margin-bottom: ${(props) => (props.bottom ? '25px' : null)};
 `
 
 export const SignUpPrompt = styled.p`
@@ -150,4 +114,7 @@ export const SignUpPrompt = styled.p`
   text-align: center;
   font-family: 'Josefin Sans', sans-serif;
   color: white;
+  & a {
+    color: white;
+  }
 `

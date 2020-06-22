@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import '../css/CreateProgrammes.css'
 import WorkoutCard from './WorkoutCard'
 import { useHistory } from 'react-router-dom'
 import { withFirebase } from './Firebase'
 import * as ROUTES from '../constants/routes'
+import {
+  Wrapper,
+  TitleWrapper,
+  ProgrammeName,
+  AddButton,
+  FooterWrapper,
+  FooterButton,
+  AddPrompt
+} from '../styles/CreateProgramme.styles'
 
 const NoWorkouts = () => {
   return (
-    <p className="add-prompt">
+    <AddPrompt>
       Click the add button (+) in the top right to add a workout
-    </p>
+    </AddPrompt>
   )
 }
 
@@ -86,19 +94,21 @@ const CreateProgrammeBase = (props) => {
     history.push(ROUTES.HOME)
   }
 
-  const goBack = () => {
+  const cancel = () => {
     window.localStorage.clear()
-    history.push('/programmes')
+    history.push(ROUTES.HOME)
   }
 
   const workoutsExist = Object.keys(workouts).length !== 0
 
   return (
-    <div className="create-prog-wrapper">
-      <div className="create-row">
-        <h1 className="programmes-title create">CREATE PROGRAMME</h1>
-        <button className="add-button" onClick={addWorkout}></button>
-      </div>
+    <Wrapper>
+      <TitleWrapper>
+        <ProgrammeName
+          placeholder="PROGRAMME"
+        ></ProgrammeName>
+        <AddButton onClick={addWorkout}></AddButton>
+      </TitleWrapper>
       {workoutsExist ? (
         <Workouts
           workouts={workouts}
@@ -109,15 +119,15 @@ const CreateProgrammeBase = (props) => {
       ) : (
         <NoWorkouts />
       )}
-      <div className="back-next">
-        <button className="back orange-cta" onClick={goBack}>
+      <FooterWrapper>
+        <FooterButton cancel onClick={cancel}>
           CANCEL
-        </button>
-        <button className="next orange-cta" onClick={saveProgramme}>
+        </FooterButton>
+        <FooterButton save onClick={saveProgramme}>
           SAVE
-        </button>
-      </div>
-    </div>
+        </FooterButton>
+      </FooterWrapper>
+    </Wrapper>
   )
 }
 

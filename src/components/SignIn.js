@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import '../css/Login.css'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { withFirebase } from './Firebase'
@@ -8,17 +7,15 @@ import {
   Tagline,
   FormsWrapper,
   Title,
-  EmailInput,
-  PasswordInput,
+  Input,
   ForgotPasswordWrapper,
   ForgotPasswordLink,
   SignInButton,
   DividerWrapper,
   DividerLine,
-  FacebookLoginButton,
-  GoogleLoginButton,
+  AltLoginButton,
   SignUpPrompt,
-} from '../styles/Signin.styles'
+} from '../styles/SignIn.styles'
 
 const SignInBase = (props) => {
   const [email, setEmail] = useState('')
@@ -69,13 +66,14 @@ const SignInBase = (props) => {
       <FormsWrapper>
         <form>
           <Title>SIGN IN</Title>
-          <EmailInput
+          <Input
+            mail
             type="email"
             placeholder="Email"
             ref={emailRef}
             onChange={() => onChange(setEmail, emailRef.current.value)}
           />
-          <PasswordInput
+          <Input
             type="password"
             placeholder="Password"
             ref={passwordRef}
@@ -99,19 +97,21 @@ const SignInBase = (props) => {
             <span>Or</span>
             <DividerLine></DividerLine>
           </DividerWrapper>
-          <FacebookLoginButton
+          <AltLoginButton
+            facebook
             type="button"
             onClick={() => doSignInWithProvider('Facebook')}
           >
             Login with Facebook
-          </FacebookLoginButton>
+          </AltLoginButton>
           <br />
-          <GoogleLoginButton
+          <AltLoginButton
+            bottom
             type="button"
             onClick={() => doSignInWithProvider('Google')}
           >
             Login with Google
-          </GoogleLoginButton>
+          </AltLoginButton>
         </form>
       </FormsWrapper>
       <SignUpPrompt>

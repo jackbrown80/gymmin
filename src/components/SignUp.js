@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import '../css/Login.css'
 import { useHistory } from 'react-router-dom'
 import { withFirebase } from './Firebase'
 import * as ROUTES from '../constants/routes'
-
+import {
+  Tagline,
+  FormWrapper,
+  Title,
+  Input,
+  SignUpButton,
+} from '../styles/SignUp.styles'
 
 const SignUpBase = (props) => {
   const history = useHistory()
@@ -57,60 +62,59 @@ const SignUpBase = (props) => {
 
   return (
     <div>
-      <p className="tagline">Making sure you are always making progress!</p>
-      <div className="forms-wrapper">
+      <Tagline>Making sure you are always making progress!</Tagline>
+      <FormWrapper>
         <form>
-          <h1 className="title">SIGN UP</h1>
-          <input
+          <Title>SIGN UP</Title>
+          <Input
+            user
             type="text"
             placeholder="First Name"
-            className="input email"
             ref={firstNameRef}
             onChange={() => onChange(setFirstName, firstNameRef.current.value)}
           />
-          <input
+          <Input
+            user
             type="text"
             placeholder="Last Name"
-            className="input email"
             ref={lastNameRef}
             onChange={() => onChange(setLastName, lastNameRef.current.value)}
           />
-          <input
+          <Input
+            mail
             type="email"
             placeholder="Email"
-            className="input email"
             ref={emailRef}
             onChange={() => onChange(setEmail, emailRef.current.value)}
           />
-          <input
+          <Input
+            lock
             type="password"
             placeholder="Password"
-            className="input password"
             ref={passwordOneRef}
             onChange={() =>
               onChange(setPasswordOne, passwordOneRef.current.value)
             }
           />
-          <input
+          <Input
+            lock
             type="password"
             placeholder="Retype Password"
-            className="input password"
             ref={passwordTwoRef}
             onChange={() =>
               onChange(setPasswordTwo, passwordTwoRef.current.value)
             }
           />
-          <button
+          <SignUpButton
             type="button"
-            className="lets-go"
             disabled={isInvalid}
             onClick={() => doSignUp()}
           >
             SIGN UP
-          </button>
+          </SignUpButton>
           {error && <p>{error.message}</p>}
         </form>
-      </div>
+      </FormWrapper>
     </div>
   )
 }
