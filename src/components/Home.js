@@ -1,59 +1,66 @@
 import React, { useState, useEffect } from 'react'
-import '../css/NoProgrammes.css'
 import { useHistory } from 'react-router-dom'
 import * as ROUTES from '../constants/routes'
-import '../css/Programmes.css'
 import SignOutButton from './SignOutButton'
+import {
+  WelcomeCardWrapper,
+  WelcomeCardTitle,
+  WelcomeCardText,
+  WelcomeCardCtaWrapper,
+  WelcomeCardCtaText,
+  WelcomeCardCtaButton,
+  HomeWrapper,
+  Title,
+  NoProgrammesPrompt
+} from '../styles/Home.styles'
 
-const CreateProgrammeCard = (props) => {
+const WelcomeCard = (props) => {
   const history = useHistory()
 
   const handleClick = () => {
     history.push(ROUTES.CREATE_PROGRAMME)
   }
 
-  let title = ''
   let text = ''
   let textButton = ''
 
   if (props.programmesExist) {
-    title = 'WELCOME!'
     text = "Looks like you've already created a programme, you can use that!"
     textButton = 'You can choose to create another one if you like.'
   } else {
-    title = 'NO PROGRAMMES'
     text = "Looks like you haven't got any programmes yet!"
     textButton =
       "No worries, it's quick and easy to create your own and get started!"
   }
 
   return (
-    <div className="card-wrapper">
-      <h1 className="card-title">{title}</h1>
-      <p className="card-text">{text}</p>
-      <div className="text-button">
-        <p className="card-text second">{textButton}</p>
-        <button className="orange-cta" onClick={handleClick}>
+    <WelcomeCardWrapper>
+      <WelcomeCardTitle>WELCOME!</WelcomeCardTitle>
+      <WelcomeCardText>{text}</WelcomeCardText>
+      <WelcomeCardCtaWrapper>
+        <WelcomeCardCtaText>{textButton}</WelcomeCardCtaText>
+        <WelcomeCardCtaButton onClick={handleClick}>
           CREATE
-        </button>
-      </div>
-    </div>
+        </WelcomeCardCtaButton>
+      </WelcomeCardCtaWrapper>
+    </WelcomeCardWrapper>
   )
 }
 
 const NoProgrammes = () => {
   return (
     <div>
-      <p className="create-prompt">Please create a programme to get started.</p>
+      <NoProgrammesPrompt>Please create a programme to get started.</NoProgrammesPrompt>
       <SignOutButton></SignOutButton>
     </div>
   )
 }
 
-const Programmes = () => {
+const renderProgrammes = () => {
   return (
-    <div className="programmes-wrapper cards">
-      <div className="card-wrapper">Hi</div>
+    <div>
+      Programmes to come...
+      <SignOutButton></SignOutButton>
     </div>
   )
 }
@@ -68,14 +75,11 @@ const Home = (props) => {
   }, [props.programmes])
 
   return (
-    <div className="programmes-wrapper">
-      <CreateProgrammeCard
-        className="create-card"
-        programmesExist={programmesExist}
-      />
-      <h1 className="programmes-title">PROGRAMMES</h1>
-      {programmesExist ? <Programmes /> : <NoProgrammes />}
-    </div>
+    <HomeWrapper>
+      <WelcomeCard programmesExist={programmesExist} />
+      <Title>PROGRAMMES</Title>
+      {programmesExist ? renderProgrammes() : <NoProgrammes />}
+    </HomeWrapper>
   )
 }
 

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { ReactComponent as Logo } from '../svg/logo.svg'
-import '../css/App.css'
 import SignIn from './SignIn'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './Home'
@@ -10,10 +9,12 @@ import CreateProgramme from './CreateProgramme'
 import * as ROUTES from '../constants/routes'
 import SignUp from './SignUp'
 import { withFirebase } from './Firebase'
+import { AppContainer, LogoWrapper } from '../styles/App.styles'
+import '../css/cleaning.css'
 
-function App(props) {
+
+const App = (props) => {
   const [authUser, setAuthUser] = useState(null)
-
   const [programmes, setProgrammes] = useState(null)
   const [programmesLoading, setProgrammesLoading] = useState(false)
 
@@ -43,9 +44,11 @@ function App(props) {
 
   return (
     <Router>
-      <div className="App">
+      <AppContainer>
         <header>
-          <Logo className="logo" />
+          <LogoWrapper>
+            <Logo />
+          </LogoWrapper>
         </header>
         <Route path={ROUTES.LANDING} exact></Route>
         <Route path={ROUTES.SIGN_IN} render={() => <SignIn />}></Route>
@@ -71,7 +74,7 @@ function App(props) {
           )}
         ></Route>
         <Route path={ROUTES.PASSWORD_FORGET}></Route>
-      </div>
+      </AppContainer>
     </Router>
   )
 }

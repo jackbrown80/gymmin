@@ -1,9 +1,21 @@
 import React, { useState } from 'react'
-import '../css/Login.css'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { withFirebase } from './Firebase'
 import * as ROUTES from '../constants/routes'
+import {
+  Tagline,
+  FormsWrapper,
+  Title,
+  Input,
+  ForgotPasswordWrapper,
+  ForgotPasswordLink,
+  SignInButton,
+  DividerWrapper,
+  DividerLine,
+  AltLoginButton,
+  SignUpPrompt,
+} from '../styles/SignIn.styles'
 
 const SignInBase = (props) => {
   const [email, setEmail] = useState('')
@@ -50,68 +62,64 @@ const SignInBase = (props) => {
 
   return (
     <div>
-      <p className="tagline">Making sure you are always making progress!</p>
-      <div className="forms-wrapper">
+      <Tagline>Making sure you are always making progress!</Tagline>
+      <FormsWrapper>
         <form>
-          <h1 className="title">SIGN IN</h1>
-          <input
+          <Title>SIGN IN</Title>
+          <Input
+            mail
             type="email"
             placeholder="Email"
-            className="input email"
             ref={emailRef}
             onChange={() => onChange(setEmail, emailRef.current.value)}
           />
-          <input
+          <Input
             type="password"
             placeholder="Password"
-            className="input password"
             ref={passwordRef}
             onChange={() => onChange(setPassword, passwordRef.current.value)}
           />
-          <div className="forgot-wrapper">
-            <a href="/">Forgot Password?</a>
-          </div>
-          <div className="button-row">
-            <button
-              type="button"
-              className="lets-go"
-              disabled={isInvalid}
-              onClick={() => doSignIn()}
-            >
-              LET'S GO
-            </button>
-          </div>
+          <ForgotPasswordWrapper>
+            <ForgotPasswordLink href="/">Forgot Password?</ForgotPasswordLink>
+          </ForgotPasswordWrapper>
+          <SignInButton
+            type="button"
+            disabled={isInvalid}
+            onClick={() => doSignIn()}
+          >
+            LET'S GO
+          </SignInButton>
           {error && <p>{error.message}</p>}
         </form>
         <form>
-          <div className="or-divider">
-            <hr className="divider"></hr>
+          <DividerWrapper>
+            <DividerLine></DividerLine>
             <span>Or</span>
-            <hr className="divider"></hr>
-          </div>
-          <button
+            <DividerLine></DividerLine>
+          </DividerWrapper>
+          <AltLoginButton
+            facebook
             type="button"
-            className="input alt-login facebook"
             onClick={() => doSignInWithProvider('Facebook')}
           >
             Login with Facebook
-          </button>
+          </AltLoginButton>
           <br />
-          <button
+          <AltLoginButton
+            bottom
             type="button"
-            className="input alt-login google"
             onClick={() => doSignInWithProvider('Google')}
           >
             Login with Google
-          </button>
+          </AltLoginButton>
         </form>
-      </div>
-      <p className="new-account">
+      </FormsWrapper>
+      <SignUpPrompt>
         Don't have an account?{' '}
         <Link to={ROUTES.SIGN_UP} className="link">
           Sign Up
         </Link>
-      </p>
+      </SignUpPrompt>
     </div>
   )
 }
