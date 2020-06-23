@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import add from '../svg/add-black.svg'
 
 export const WelcomeCardWrapper = styled.div`
   background-color: white;

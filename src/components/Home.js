@@ -12,7 +12,7 @@ import {
   WelcomeCardCtaButton,
   HomeWrapper,
   Title,
-  NoProgrammesPrompt
+  NoProgrammesPrompt,
 } from '../styles/Home.styles'
 
 const WelcomeCard = (props) => {
@@ -51,7 +51,9 @@ const WelcomeCard = (props) => {
 const NoProgrammes = () => {
   return (
     <div>
-      <NoProgrammesPrompt>Please create a programme to get started.</NoProgrammesPrompt>
+      <NoProgrammesPrompt>
+        Please create a programme to get started.
+      </NoProgrammesPrompt>
       <SignOutButton></SignOutButton>
     </div>
   )
@@ -59,7 +61,10 @@ const NoProgrammes = () => {
 
 const renderProgrammes = () => {
   return (
+    <div>
       <ProgrammeCard></ProgrammeCard>
+      <SignOutButton></SignOutButton>
+    </div>
   )
 }
 

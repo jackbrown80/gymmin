@@ -2,16 +2,15 @@
 
 import React, { useState, useEffect } from 'react'
 import { ReactComponent as Logo } from '../svg/logo.svg'
-import SignIn from './SignIn'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from './Home'
+import Landing from './Landing'
 import CreateProgramme from './CreateProgramme'
 import * as ROUTES from '../constants/routes'
 import SignUp from './SignUp'
 import { withFirebase } from './Firebase'
 import { AppContainer, LogoWrapper } from '../styles/App.styles'
 import '../css/cleaning.css'
-
 
 const App = (props) => {
   const [authUser, setAuthUser] = useState(null)
@@ -50,8 +49,11 @@ const App = (props) => {
             <Logo />
           </LogoWrapper>
         </header>
-        <Route path={ROUTES.LANDING} exact></Route>
-        <Route path={ROUTES.SIGN_IN} render={() => <SignIn />}></Route>
+        <Route
+          path={ROUTES.LANDING}
+          exact
+          render={() => <Landing authUser={authUser} />}
+        ></Route>
         <Route path={ROUTES.SIGN_UP} render={() => <SignUp />}></Route>
         <Route
           path={ROUTES.HOME}

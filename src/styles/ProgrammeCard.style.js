@@ -17,7 +17,6 @@ export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 0 80%;
-
 `
 
 export const Title = styled.h1`
