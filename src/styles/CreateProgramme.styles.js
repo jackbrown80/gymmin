@@ -26,19 +26,13 @@ export const ProgrammeName = styled.input`
 `
 
 export const AddButton = styled.button`
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  background-color: rgba(0,0,0,0);
+  color: white;
   border: none;
-  background-color: rgba(1, 1, 1, 0);
-  font-weight: 500;
+  outline: none;
+  width: 20%;
   font-size: 25px;
-  background-image: url(${add});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin: 0 15px 5px 0px;
-  transition: transform 200ms;
+  font-weight: 600;
   &:active {
     transform: scale(0.8);
   }

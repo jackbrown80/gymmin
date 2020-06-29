@@ -104,7 +104,7 @@ const WorkoutCard = (props) => {
             updateWorkoutName(refObj[`workoutName${props.index}`].current.value)
           }
         />
-        <AddButton onClick={addExercise}></AddButton>
+        <AddButton onClick={addExercise}>+</AddButton>
         <DeleteButton onClick={() => props.deleteWorkout(props.index)}>
           ×
         </DeleteButton>

@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import arrow from '../svg/right-arrow.svg'
 
-
 export const CardWrapper = styled.div`
   background-color: white;
   border-radius: 3px;
@@ -10,6 +9,7 @@ export const CardWrapper = styled.div`
   width: 90%;
   align-self: center;
   margin: 0;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
 `
@@ -33,11 +33,16 @@ export const Description = styled.p`
   margin-top: 10px;
 `
 
-export const Arrow = styled.div`
+export const Arrow = styled.button`
   background-repeat: no-repeat;
   background-size: 25px;
   background-position: center;
   background-image: url(${arrow});
   flex: 1 0 20%;
   height: 50px;
+  background-color: white;
+  outline: none;
+  &:active{
+    transform: scale(0.8);
+  }
 `

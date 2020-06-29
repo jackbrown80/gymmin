@@ -10,8 +10,11 @@ import {
   AddButton,
   FooterWrapper,
   FooterButton,
-  AddPrompt
+  AddPrompt,
 } from '../styles/CreateProgramme.styles'
+import {
+  getDate,
+} from '../helpers/helpers'
 
 const NoWorkouts = () => {
   return (
@@ -52,6 +55,8 @@ const CreateProgrammeBase = (props) => {
   )
   const history = useHistory()
 
+  const programmeNameRef = React.createRef()
+
   // Each time App rerenders update local storage with the new state
   useEffect(() => {
     // Stringify turns the object into a string so it can be stored correctly
@@ -86,8 +91,12 @@ const CreateProgrammeBase = (props) => {
       ...props.programmes,
     }
 
-    const programmesCount = Object.keys(prevProgrammes).length
-    prevProgrammes[`programme${programmesCount + 1}`] = workouts
+    prevProgrammes[`programme${Date.now()}`] = {
+      name: programmeNameRef.current.value,
+      ...workouts,
+      created: getDate()
+    }
+
     props.firebase.db
       .ref(`users/${props.authUser.uid}/programmes`)
       .set(prevProgrammes)
@@ -106,8 +115,9 @@ const CreateProgrammeBase = (props) => {
       <TitleWrapper>
         <ProgrammeName
           placeholder="PROGRAMME"
+          ref={programmeNameRef}
         ></ProgrammeName>
-        <AddButton onClick={addWorkout}></AddButton>
+        <AddButton onClick={addWorkout}>+</AddButton>
       </TitleWrapper>
       {workoutsExist ? (
         <Workouts

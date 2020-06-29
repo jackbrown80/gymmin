@@ -21,29 +21,23 @@ export const TitleWrapper = styled.div`
 export const WorkoutNameInput = styled.input`
   font-family: 'Josefin Sans', sans-serif;
   font-weight: 900;
-  margin-top: 30px;
+  margin-top: 10px;
   color: black;
   font-size: 18px;
   outline: none;
   border: none;
-  margin: 0;
   width: 70%;
+  min-height: 100%;
 `
 
 export const AddButton = styled.button`
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  background-color: rgba(0,0,0,0);
+  color: black;
   border: none;
-  background-color: rgba(1, 1, 1, 0);
-  font-weight: 500;
+  outline: none;
+  width: 20%;
   font-size: 25px;
-  background-image: url(${add});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-right: 20px;
-  transition: transform 200ms;
+  font-weight: 600;
   &:active {
     transform: scale(0.8);
   }

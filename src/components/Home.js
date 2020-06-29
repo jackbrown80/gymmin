@@ -59,15 +59,6 @@ const NoProgrammes = () => {
   )
 }
 
-const renderProgrammes = () => {
-  return (
-    <div>
-      <ProgrammeCard></ProgrammeCard>
-      <SignOutButton></SignOutButton>
-    </div>
-  )
-}
-
 const Home = (props) => {
   const [programmesExist, setProgrammesExist] = useState(
     props.programmes !== null
@@ -76,6 +67,12 @@ const Home = (props) => {
   useEffect(() => {
     setProgrammesExist(props.programmes !== null)
   }, [props.programmes])
+
+  const renderProgrammes = () => {
+    return Object.keys(props.programmes).map((key) => (
+      <ProgrammeCard title={props.programmes[key].name} key={key} desc={`Created: ${props.programmes[key].created}`}></ProgrammeCard>
+    ))
+  }
 
   return (
     <HomeWrapper>

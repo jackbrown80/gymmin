@@ -43,9 +43,7 @@ const SignInBase = (props) => {
       .doSignInWithPopUp(provider)
       .then((authUser) => {
         return props.firebase.getUserbyUid(authUser.user.uid).set({
-          email: '',
-          firstName: '',
-          lastName: '',
+          details: { email: '', firstName: '', lastName: '' },
         })
       })
       .then(() => {

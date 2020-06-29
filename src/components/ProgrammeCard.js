@@ -7,12 +7,12 @@ import {
   Arrow,
 } from '../styles/ProgrammeCard.style'
 
-const ProgrammeCard = () => {
+const ProgrammeCard = (props) => {
     return (
         <CardWrapper>
             <TextWrapper>
-                <Title>Push, Pull, Legs</Title>
-                <Description>Not yet started</Description>
+                <Title>{props.title}</Title>
+                <Description>{props.desc}</Description>
             </TextWrapper>
             <Arrow></Arrow>
         </CardWrapper>
