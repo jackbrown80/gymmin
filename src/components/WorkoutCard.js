@@ -16,22 +16,18 @@ import {
 } from '../styles/WorkoutCard.styles'
 
 const WorkoutCard = (props) => {
-  const initialExercises = JSON.parse(
-    window.localStorage.getItem(`${props.index}/exercises`)
-  ) || { exercise1: {} }
-  const initialExercisesIncDeleted = JSON.parse(
-    window.localStorage.getItem(`${props.index}/exercisesIncDeleted`)
-  ) || ['exercise1']
+  const initialExercises =
+    JSON.parse(window.localStorage.getItem(`${props.index}/exercises`)) || {}
 
   // Adds a 'todos' property to state object and creates addToDo function which is used to update the state. Intital state of todos is set to the local storage
   const [workout, setWorkout] = useState({
     name: props.index,
-    exercises: { exercise1: { name: '', sets: 0 }, ...initialExercises },
+    exercises: {
+      [`exercise${Date.now()}`]: { name: '', sets: 0 },
+      ...initialExercises,
+    },
   })
 
-  const [exercisesIncDeleted, setExercisesIncDeleted] = useState(
-    initialExercisesIncDeleted
-  )
   // Each time App rerenders update local storage with the new state
   useEffect(() => {
     // Stringify turns the object into a string so it can be stored correctly
@@ -39,27 +35,26 @@ const WorkoutCard = (props) => {
       `${props.index}/exercises`,
       JSON.stringify(workout.exercises)
     )
-    window.localStorage.setItem(
-      `${props.index}/exercisesIncDeleted`,
-      JSON.stringify(exercisesIncDeleted)
-    )
   })
+
+  useEffect(() => {
+    let prevWorkouts = { ...props.workouts }
+
+    prevWorkouts[props.index] = workout
+    props.setWorkouts(prevWorkouts)
+  }, [workout])
 
   const saveWorkout = () => {
     let prevWorkouts = { ...props.workouts }
+
     prevWorkouts[props.index] = workout
     props.setWorkouts(prevWorkouts)
   }
 
   const addExercise = () => {
-    let prevExercisesIncDeleted = [...exercisesIncDeleted]
-    const exercisesCount = Object.keys(prevExercisesIncDeleted).length
-    prevExercisesIncDeleted.push(`exercise${exercisesCount + 1}`)
-    setExercisesIncDeleted(prevExercisesIncDeleted)
-
     let prevWorkout = { ...workout }
 
-    prevWorkout.exercises[`exercise${exercisesIncDeleted.length + 1}`] = {}
+    prevWorkout.exercises[`exercise${Date.now()}`] = { name: '', sets: 0 }
     setWorkout(prevWorkout)
   }
 
@@ -71,20 +66,32 @@ const WorkoutCard = (props) => {
 
   const refObj = {}
 
-  const updateExercise = (key, nameOrSets, name) => {
+  const updateExercise = (key, property, value) => {
     let prevWorkout = { ...workout }
-    prevWorkout.exercises[key][nameOrSets] = name
-    setWorkout(prevWorkout)
-
-    saveWorkout()
+    if (property === 'sets') {
+      let sets = {}
+      for (let index = 0; index < value; index++) {
+        sets[`set${index + 1}`] = {
+          set: index + 1,
+          reps: 0,
+          prevWeight: 'NA',
+          newWeight: 0,
+        }
+      }
+      prevWorkout = { ...workout }
+      prevWorkout.exercises[key][property] = sets
+      setWorkout(prevWorkout)
+    } else {
+      prevWorkout = { ...workout }
+      prevWorkout.exercises[key][property] = value
+      setWorkout(prevWorkout)
+    }
   }
 
   const updateWorkoutName = (name) => {
     let prevWorkout = { ...workout }
     prevWorkout.name = name
     setWorkout(prevWorkout)
-
-    saveWorkout()
   }
 
   Object.keys(workout.exercises).forEach((key) => {
@@ -98,7 +105,7 @@ const WorkoutCard = (props) => {
     <CardWrapper>
       <TitleWrapper>
         <WorkoutNameInput
-          placeholder={props.index.toUpperCase()}
+          placeholder="Workout Name"
           ref={refObj[`workoutName${props.index}`]}
           onChange={() =>
             updateWorkoutName(refObj[`workoutName${props.index}`].current.value)
@@ -114,42 +121,45 @@ const WorkoutCard = (props) => {
           <ExerciseTitle>EXERCISE</ExerciseTitle>
           <SetsTitle>SETS</SetsTitle>
         </ExercisesHeader>
-        {exercisesExist
-          ? Object.keys(workout.exercises).map((key) => (
-              <div key={key}>
-                <Divider></Divider>
-                <ExerciseWrapper>
-                  <ExerciseNameInput
-                    type="text"
-                    placeholder={key}
-                    ref={refObj[`name${key}`]}
-                    onChange={() =>
-                      updateExercise(
-                        key,
-                        'name',
-                        refObj[`name${key}`].current.value
-                      )
-                    }
-                  />
-                  <SetsInput
-                    type="number"
-                    placeholder="3"
-                    ref={refObj[`sets${key}`]}
-                    onChange={() =>
-                      updateExercise(
-                        key,
-                        'sets',
-                        refObj[`sets${key}`].current.value
-                      )
-                    }
-                  />
-                  <DeleteButton onClick={() => deleteExercise(key)}>
-                    ×
-                  </DeleteButton>
-                </ExerciseWrapper>
-              </div>
-            ))
-          : null}
+        {exercisesExist ? (
+          Object.keys(workout.exercises).map((key) => (
+            <div key={key}>
+              <Divider></Divider>
+              <ExerciseWrapper>
+                <ExerciseNameInput
+                  type="text"
+                  value={workout.exercises[key].name}
+                  placeholder="Exercise Name"
+                  ref={refObj[`name${key}`]}
+                  onChange={() =>
+                    updateExercise(
+                      key,
+                      'name',
+                      refObj[`name${key}`].current.value
+                    )
+                  }
+                />
+                <SetsInput
+                  type="number"
+                  placeholder="3"
+                  ref={refObj[`sets${key}`]}
+                  onChange={() =>
+                    updateExercise(
+                      key,
+                      'sets',
+                      refObj[`sets${key}`].current.value
+                    )
+                  }
+                />
+                <DeleteButton onClick={() => deleteExercise(key)}>
+                  ×
+                </DeleteButton>
+              </ExerciseWrapper>
+            </div>
+          ))
+        ) : (
+          <div>Hi</div>
+        )}
       </ExercisesWrapper>
     </CardWrapper>
   )

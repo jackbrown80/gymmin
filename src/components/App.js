@@ -8,6 +8,8 @@ import Landing from './Landing'
 import CreateProgramme from './CreateProgramme'
 import * as ROUTES from '../constants/routes'
 import SignUp from './SignUp'
+import RecordWorkout from './RecordWorkout'
+import Programme from './Programme'
 import { withFirebase } from './Firebase'
 import { AppContainer, LogoWrapper } from '../styles/App.styles'
 import '../css/cleaning.css'
@@ -60,7 +62,6 @@ const App = (props) => {
           render={() => (
             <Home
               programmes={programmes}
-              setProgrammes={setProgrammes}
               authUser={authUser}
             />
           )}
@@ -70,7 +71,25 @@ const App = (props) => {
           render={() => (
             <CreateProgramme
               programmes={programmes}
-              setProgrammes={setProgrammes}
+              authUser={authUser}
+            />
+          )}
+        ></Route>
+        <Route
+          exact
+          path={`${ROUTES.PROGRAMME}/:programmeId`}
+          render={() => (
+            <Programme
+              programmes={programmes}
+              authUser={authUser}
+            />
+          )}
+        ></Route>
+        <Route
+          path={`${ROUTES.PROGRAMME}/:programmeId${ROUTES.RECORD_WORKOUT}/:workoutId`}
+          render={() => (
+            <RecordWorkout
+              programmes={programmes}
               authUser={authUser}
             />
           )}

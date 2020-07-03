@@ -14,7 +14,7 @@ const ProgrammeCard = (props) => {
                 <Title>{props.title}</Title>
                 <Description>{props.desc}</Description>
             </TextWrapper>
-            <Arrow></Arrow>
+            <Arrow onClick={props.arrowClick}></Arrow>
         </CardWrapper>
     )
 }

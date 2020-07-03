@@ -12,9 +12,7 @@ import {
   FooterButton,
   AddPrompt,
 } from '../styles/CreateProgramme.styles'
-import {
-  getDate,
-} from '../helpers/helpers'
+import { getDate } from '../helpers/helpers'
 
 const NoWorkouts = () => {
   return (
@@ -32,7 +30,6 @@ const Workouts = (props) => {
           key={key}
           index={key}
           deleteWorkout={props.deleteWorkout}
-          setProgrammes={props.setProgrammes}
           setWorkouts={props.setWorkouts}
           workouts={props.workouts}
         />
@@ -45,14 +42,10 @@ const CreateProgrammeBase = (props) => {
   // Get intial workouts state from local storage, if it doesn't exist set it to 0. Parse turns it from a string to an object
   const initialWorkouts =
     JSON.parse(window.localStorage.getItem('workouts')) || 0
-  const initialWorkoutsIncDeleted =
-    JSON.parse(window.localStorage.getItem('workoutsIncDeleted')) || []
 
   // Adds a 'todos' property to state object and creates addToDo function which is used to update the state. Intital state of todos is set to the local storage
   const [workouts, setWorkouts] = useState(initialWorkouts)
-  const [workoutsIncDeleted, setWorkoutsIncDeleted] = useState(
-    initialWorkoutsIncDeleted
-  )
+
   const history = useHistory()
 
   const programmeNameRef = React.createRef()
@@ -61,20 +54,11 @@ const CreateProgrammeBase = (props) => {
   useEffect(() => {
     // Stringify turns the object into a string so it can be stored correctly
     window.localStorage.setItem('workouts', JSON.stringify(workouts))
-    window.localStorage.setItem(
-      'workoutsIncDeleted',
-      JSON.stringify(workoutsIncDeleted)
-    )
   })
 
   const addWorkout = () => {
-    let prevWorkoutsIncDeleted = [...workoutsIncDeleted]
-    const workoutsCount = Object.keys(prevWorkoutsIncDeleted).length
-    prevWorkoutsIncDeleted.push(`workout${workoutsCount + 1}`)
-    setWorkoutsIncDeleted(prevWorkoutsIncDeleted)
-
     let prevWorkouts = { ...workouts }
-    prevWorkouts[`workout${workoutsCount + 1}`] = {}
+    prevWorkouts[`workout${Date.now()}`] = {}
     setWorkouts(prevWorkouts)
   }
 
@@ -93,13 +77,19 @@ const CreateProgrammeBase = (props) => {
 
     prevProgrammes[`programme${Date.now()}`] = {
       name: programmeNameRef.current.value,
-      ...workouts,
-      created: getDate()
+      workouts: { ...workouts },
+      created: getDate(),
     }
+
+    console.log(prevProgrammes);
+    
 
     props.firebase.db
       .ref(`users/${props.authUser.uid}/programmes`)
       .set(prevProgrammes)
+
+    window.localStorage.clear()
+
     history.push(ROUTES.HOME)
   }
 
@@ -114,7 +104,7 @@ const CreateProgrammeBase = (props) => {
     <Wrapper>
       <TitleWrapper>
         <ProgrammeName
-          placeholder="PROGRAMME"
+          placeholder="Programme Name"
           ref={programmeNameRef}
         ></ProgrammeName>
         <AddButton onClick={addWorkout}>+</AddButton>

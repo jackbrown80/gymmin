@@ -63,14 +63,23 @@ const Home = (props) => {
   const [programmesExist, setProgrammesExist] = useState(
     props.programmes !== null
   )
+  const history = useHistory()
 
   useEffect(() => {
     setProgrammesExist(props.programmes !== null)
   }, [props.programmes])
 
   const renderProgrammes = () => {
+    const arrowClick = (key) => {
+      history.push(`${ROUTES.PROGRAMME}/${key.slice(9)}`)
+    }
     return Object.keys(props.programmes).map((key) => (
-      <ProgrammeCard title={props.programmes[key].name} key={key} desc={`Created: ${props.programmes[key].created}`}></ProgrammeCard>
+      <ProgrammeCard
+        title={props.programmes[key].name}
+        key={key}
+        desc={`Created: ${props.programmes[key].created}`}
+        arrowClick={() => arrowClick(key)}
+      ></ProgrammeCard>
     ))
   }
 
